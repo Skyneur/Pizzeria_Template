@@ -13,10 +13,18 @@ class PizzaList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pizzas = PizzaData.getPizzas();
+    final size = MediaQuery.of(context).size;
+    final crossAxisCount = size.width > 1200 ? 3 : size.width > 800 ? 2 : 1;
 
     return Scaffold(
       appBar: AppBarWidget(title: 'Nos Pizzas', cart: cart),
-      body: ListView.builder(
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: crossAxisCount,
+          crossAxisSpacing: 10.0,
+          mainAxisSpacing: 10.0,
+          childAspectRatio: 0.75,
+        ),
         itemCount: pizzas.length,
         itemBuilder: (context, index) {
           return InkWell(
@@ -34,6 +42,7 @@ class PizzaList extends StatelessWidget {
             child: buildRow(context, pizzas[index]),
           );
         },
+        padding: EdgeInsets.all(10.0),
       ),
     );
   }
@@ -85,8 +94,8 @@ class PizzaList extends StatelessWidget {
                       SnackBar(content: Text('${pizza.name} ajoutée au panier !')),
                     );
                   },
-                  icon: Icon(Icons.shopping_cart),
-                  label: Text('Commander'),
+                  icon: Icon(Icons.shopping_cart, color: Colors.white),
+                  label: Text('Commander', style: TextStyle(color: Colors.white)), // Ajoutez style: TextStyle(color: Colors.white) ici
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
