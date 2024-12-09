@@ -5,6 +5,7 @@ class Pizza {
   final double price;
   final List<String> ingredients;
   final List<String> allergens;
+  final Map<String, double> nutritionValues;
 
   Pizza({
     required this.name,
@@ -13,5 +14,6 @@ class Pizza {
     required this.price,
     required this.ingredients,
     required this.allergens,
+    required this.nutritionValues,
   });
 }

@@ -74,7 +74,9 @@ class PizzaList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Text(
-              pizza.description,
+              pizza.description.length > 100
+                  ? '${pizza.description.substring(0, 100)}...'
+                  : pizza.description,
               style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             ),
           ),
@@ -99,6 +101,7 @@ class PizzaList extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   ),
                 ),
               ],

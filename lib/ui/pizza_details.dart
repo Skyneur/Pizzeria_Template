@@ -13,13 +13,16 @@ class PizzaDetails extends StatefulWidget {
 }
 
 class _PizzaDetailsState extends State<PizzaDetails> {
+  bool _showAllergens = false;
+  bool _showNutritionValues = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.pizza.name),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,7 @@ class _PizzaDetailsState extends State<PizzaDetails> {
             // Description
             Text(
               widget.pizza.description,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
             SizedBox(height: 20),
             // Ingrédients
@@ -60,19 +63,68 @@ class _PizzaDetailsState extends State<PizzaDetails> {
             ),
             Text(
               widget.pizza.ingredients.join(', '),
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
             ),
             SizedBox(height: 20),
             // Allergènes
-            Text(
-              'Allergènes:',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _showAllergens = !_showAllergens;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Allergènes:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(_showAllergens ? Icons.expand_less : Icons.expand_more),
+                ],
+              ),
             ),
-            Text(
-              widget.pizza.allergens.join(', '),
-              style: TextStyle(fontSize: 16),
+            if (_showAllergens)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                  widget.pizza.allergens.join(', '),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                ),
+              ),
+            SizedBox(height: 20),
+            // Valeurs nutritionnelles
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _showNutritionValues = !_showNutritionValues;
+                });
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Valeurs nutritionnelles pour 100g:',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Icon(_showNutritionValues ? Icons.expand_less : Icons.expand_more),
+                ],
+              ),
             ),
-            Spacer(),
+            if (_showNutritionValues)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widget.pizza.nutritionValues.entries.map((entry) {
+                    return Text(
+                      '${entry.key}: ${entry.value}g',
+                      style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                    );
+                  }).toList(),
+                ),
+              ),
+            SizedBox(height: 20),
             // Bouton pour commander
             Center(
               child: ElevatedButton.icon(
