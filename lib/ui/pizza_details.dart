@@ -19,39 +19,81 @@ class _PizzaDetailsState extends State<PizzaDetails> {
       appBar: AppBar(
         title: Text(widget.pizza.name),
       ),
-      body: Column(
-        children: [
-          // Image de la pizza
-          Image.asset(
-            widget.pizza.imagePath,
-            height: 200,
-            fit: BoxFit.cover,
-          ),
-          SizedBox(height: 10),
-          // Description
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image de la pizza
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.asset(
+                  widget.pizza.imagePath,
+                  height: 200,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            // Description
+            Text(
               widget.pizza.description,
               style: TextStyle(fontSize: 16),
             ),
-          ),
-          Spacer(),
-          // Bouton pour commander
-          ElevatedButton.icon(
-            onPressed: () {
-              widget.cart.addPizza(widget.pizza);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('${widget.pizza.name} ajoutée au panier !')),
-              );
-            },
-            icon: Icon(Icons.shopping_cart),
-            label: Text('Ajouter au panier'),
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(vertical: 12),
+            SizedBox(height: 20),
+            // Ingrédients
+            Text(
+              'Ingrédients:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-        ],
+            Text(
+              widget.pizza.ingredients.join(', '),
+              style: TextStyle(fontSize: 16),
+            ),
+            SizedBox(height: 20),
+            // Allergènes
+            Text(
+              'Allergènes:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              widget.pizza.allergens.join(', '),
+              style: TextStyle(fontSize: 16),
+            ),
+            Spacer(),
+            // Bouton pour commander
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  widget.cart.addPizza(widget.pizza);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('${widget.pizza.name} ajoutée au panier !')),
+                  );
+                },
+                icon: Icon(Icons.shopping_cart),
+                label: Text('Ajouter au panier'),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
