@@ -67,7 +67,7 @@ Ce projet a été développé en utilisant Visual Studio Code (VSCode) et testé
 
 ## Captures d'écran
 
-Ajoutez ici des captures d'écran de l'application pour montrer son interface et ses fonctionnalités.
+Bientôt.
 
 ## Contribuer
 
