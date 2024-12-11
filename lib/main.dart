@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'ui/pizza_list.dart'; // Importez la classe PizzaList pour la navigation
 import 'models/cart.dart';
 import 'share/appbar_widget.dart';
+import 'dart:html' as html; // Importez le package dart:html
 
 void main() {
   runApp(MyApp());
+  html.window.console.warn('\n\nNe mettez pas n\'importe quoi comme commande dans la console navigateur.\n\n\n');
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Pizzéria',
-      theme: ThemeData(primarySwatch: Colors.red),
+      title: 'Pizza Bella',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        textTheme: const TextTheme(
+          headlineLarge: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold, color: Colors.red),
+          bodyLarge: TextStyle(fontSize: 18.0, color: Colors.black),
+        ),
+      ),
       debugShowCheckedModeBanner: false, // Désactive la bannière de débogage
-      home: MyHomePage(title: 'Notre Pizzéria'),
+      home: MyHomePage(title: 'Pizza Bella'),
     );
   }
 }
@@ -30,7 +38,20 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(title: title, cart: cart), // Assurez-vous que AppBarWidget est défini
-      body: MenuList(cart: cart), // Passez le cart ici
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Commander maintenant !',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            const SizedBox(height: 20),
+            Expanded(child: MenuList(cart: cart)), // Passez le cart ici
+          ],
+        ),
+      ),
     );
   }
 }
@@ -50,10 +71,12 @@ class MenuList extends StatelessWidget {
   MenuList({required this.cart}); // Constructeur pour recevoir cart
 
   final List<Menu> menus = [
-    Menu(title: 'Pizzas', color: Colors.red.shade100, imagePath: 'assets/images/menus/pizzas.png'),
-    Menu(title: 'Boissons', color: Colors.blue.shade100, imagePath: 'assets/images/menus/boissons.png'),
-    Menu(title: 'Desserts', color: Colors.green.shade100, imagePath: 'assets/images/menus/desserts.png'),
+    Menu(title: 'Pizzas', color: Colors.red.shade100, imagePath: 'http://localhost/static/images/home/pizzas.png'),
+    Menu(title: 'Boissons', color: Colors.blue.shade100, imagePath: 'http://localhost/static/images/home/boissons.png'),
+    Menu(title: 'Desserts', color: Colors.green.shade100, imagePath: 'http://localhost/static/images/home/desserts.png'),
   ];
+
+  static final Set<String> _loadedImages = {};
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +104,7 @@ class MenuList extends StatelessWidget {
   // Widget pour afficher chaque élément du menu
   Widget buildRow(Menu menu) {
     return Container(
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.symmetric(vertical: 10.0),
       decoration: BoxDecoration(
         color: menu.color,
         borderRadius: BorderRadius.circular(20.0),
@@ -96,14 +119,30 @@ class MenuList extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            height: 150,
-            child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-              child: Image.network(
-                menu.imagePath,
-                fit: BoxFit.cover,
-              ),
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+            child: Image.network(
+              menu.imagePath,
+              width: double.infinity,
+              height: 150,
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                }
+              },
+              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                print('Erreur de chargement de l\'image ${menu.imagePath}');
+                return Icon(Icons.error);
+              },
             ),
           ),
           Padding(

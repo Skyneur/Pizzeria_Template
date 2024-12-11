@@ -134,8 +134,8 @@ class _PizzaDetailsState extends State<PizzaDetails> {
                     SnackBar(content: Text('${widget.pizza.name} ajoutée au panier !')),
                   );
                 },
-                icon: Icon(Icons.shopping_cart),
-                label: Text('Ajouter au panier'),
+                icon: Icon(Icons.shopping_cart, color: Colors.white),
+                label: Text('Ajouter au panier', style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                   shape: RoundedRectangleBorder(
