@@ -6,7 +6,7 @@ import '../models/pizza.dart';
 class PizzeriaService {
   // URL du web service
   static const String baseUrl =
-      'http://localhost/api/pizzas/'; // Remplace par 'http://localhost/api/pizzas' si nécessaire
+      'http://localhost/api/pizzas/';
 
   // Fonction pour récupérer les pizzas depuis le web service
   Future<List<Pizza>> fetchPizzas() async {
@@ -19,7 +19,7 @@ class PizzeriaService {
 
       if (response.statusCode == 200) {
         final List<dynamic> data = jsonDecode(response.body);
-        return data.map((json) => Pizza.fromJson(json)).toList();
+        return data.map<Pizza>((json) => Pizza.fromJson(json)).toList();
       } else {
         throw Exception('Failed to load pizzas: ${response.statusCode}');
       }

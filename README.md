@@ -40,12 +40,14 @@ Pour installer et exécuter ce projet localement, suivez ces étapes :
    flutter pub get
    ```
 
-3. Lancez l'application sur un émulateur ou un appareil physique :
+3. Lancez l'application sur un émulateur ou un appareil physique (Chrome est recommandé) :
    ```bash
    flutter run
    ```
 
 Assurez-vous d'avoir Flutter installé sur votre système. Consultez [la documentation officielle](https://flutter.dev/docs/get-started/install) pour plus de détails.
+
+Ce projet a été développé en utilisant Visual Studio Code (VSCode) et testé principalement sur l'émulateur Chrome.
 
 ## Utilisation
 
