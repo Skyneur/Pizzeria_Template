@@ -41,7 +41,7 @@ class _PizzaDetailsState extends State<PizzaDetails> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Image.asset(
+                child: Image.network(
                   widget.pizza.imagePath,
                   height: 200,
                   width: double.infinity,

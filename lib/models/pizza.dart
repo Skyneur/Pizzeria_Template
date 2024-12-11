@@ -16,4 +16,6 @@ class Pizza {
     required this.allergens,
     required this.nutritionValues,
   });
+
+  static fromJson(json) {}
 }

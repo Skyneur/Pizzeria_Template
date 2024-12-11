@@ -8,6 +8,8 @@ Un projet Flutter pour une application de pizzeria.
 - [Fonctionnalités](#fonctionnalités)
 - [Installation](#installation)
 - [Utilisation](#utilisation)
+- [Technologies utilisées](#technologies-utilisées)
+- [Captures d'écran](#captures-décran)
 - [Contribuer](#contribuer)
 - [Licence](#licence)
 
@@ -54,6 +56,16 @@ Assurez-vous d'avoir Flutter installé sur votre système. Consultez [la documen
 5. Consultez le total de votre commande dans la section "Panier".
 6. Passez votre commande et profitez de votre repas !
 
+## Technologies utilisées
+
+- **Flutter** : Framework pour le développement d'applications mobiles.
+- **Dart** : Langage de programmation utilisé par Flutter.
+- **Firebase** : Backend pour l'authentification et la base de données.
+- **Provider** : Gestionnaire d'état pour Flutter.
+
+## Captures d'écran
+
+Ajoutez ici des captures d'écran de l'application pour montrer son interface et ses fonctionnalités.
 
 ## Contribuer
 

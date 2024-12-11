@@ -57,11 +57,30 @@ class PizzaList extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-            child: Image.asset(
+            child: Image.network(
               pizza.imagePath,
               height: 200,
               width: double.infinity,
               fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  print('Image loaded: ${pizza.imagePath}');
+                  return child;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded / (loadingProgress.expectedTotalBytes ?? 1)
+                          : null,
+                    ),
+                  );
+                }
+              },
+              errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
+                print('Failed to load image: ${pizza.imagePath}');
+                print('Error: $error');
+                return Icon(Icons.error);
+              },
             ),
           ),
           Padding(

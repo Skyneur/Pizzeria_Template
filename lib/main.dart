@@ -100,7 +100,7 @@ class MenuList extends StatelessWidget {
             height: 150,
             child: ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-              child: Image.asset(
+              child: Image.network(
                 menu.imagePath,
                 fit: BoxFit.cover,
               ),
